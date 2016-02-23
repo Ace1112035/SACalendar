@@ -384,9 +384,6 @@
         NSDate* date = [calendar dateFromComponents:comps];
         
         NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-        comps.year = [components day];
-        comps.month = [components month];
-        comps.day = [components day];
         NSCalendar* currentCalendar = [NSCalendar currentCalendar];
         NSDate* currentDate = [currentCalendar dateFromComponents:components];
         
@@ -411,9 +408,6 @@
     NSDate* date = [calendar dateFromComponents:comps];
     
     NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
-    comps.year = [components day];
-    comps.month = [components month];
-    comps.day = [components day];
     NSCalendar* currentCalendar = [NSCalendar currentCalendar];
     NSDate* currentDate = [currentCalendar dateFromComponents:components];
     if([currentDate compare: date] == NSOrderedDescending && [[NSDate date] isEqualToDate:date] == false){
