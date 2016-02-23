@@ -374,10 +374,54 @@
         
         // set the appropriate date for the cell
         cell.dateLabel.text = [NSString stringWithFormat:@"%i",(int)indexPath.row - firstDay + 1];
+        
+//        update by Cuong 23/3/2016
+        NSDateComponents* comps = [[NSDateComponents alloc]init];
+        comps.year = yearToLoad;
+        comps.month = monthToLoad;
+        comps.day = (int)indexPath.row - firstDay + 1;
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        NSDate* date = [calendar dateFromComponents:comps];
+        
+        NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+        comps.year = [components day];
+        comps.month = [components month];
+        comps.day = [components day];
+        NSCalendar* currentCalendar = [NSCalendar currentCalendar];
+        NSDate* currentDate = [currentCalendar dateFromComponents:components];
+        
+        if([currentDate compare: date] == NSOrderedDescending && [[NSDate date] isEqualToDate:date] == false){
+            cell.dateLabel.textColor = [UIColor grayColor];
+        }
     }
     
     return cell;
 }
+
+//        update by Cuong 23/3/2016
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    int monthToLoad = [self monthToLoad:(int)collectionView.tag];
+    int yearToLoad = [self yearToLoad:(int)collectionView.tag];
+    
+    NSDateComponents* comps = [[NSDateComponents alloc]init];
+    comps.year = yearToLoad;
+    comps.month = monthToLoad;
+    comps.day = (int)indexPath.row - firstDay + 1;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDate* date = [calendar dateFromComponents:comps];
+    
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    comps.year = [components day];
+    comps.month = [components month];
+    comps.day = [components day];
+    NSCalendar* currentCalendar = [NSCalendar currentCalendar];
+    NSDate* currentDate = [currentCalendar dateFromComponents:components];
+    if([currentDate compare: date] == NSOrderedDescending && [[NSDate date] isEqualToDate:date] == false){
+        return false;
+    }
+    return true;
+}
+
 
 /*
  * Scale the collection view size to fit the frame
